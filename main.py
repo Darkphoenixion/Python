@@ -15,7 +15,7 @@ WINDOW_SIZE = (CASE_SIZE * WINDOW_WIDTH, CASE_SIZE * (WINDOW_HEIGHT+1))
 MAX_MOVE_TIME = 400
 MIN_MOVE_TIME = 100
 STEP_DECREASE = 25
-SPEED_TIME = 10000
+SPEED_TIME = 50000
 SUPER_FOOD_TIME = 6500
 ALPHA_TIME = 500
 
@@ -24,8 +24,8 @@ GREEN_COLOR = (92, 242, 0)
 GRASS_COLOR = (50, 192, 0)
 SNAKE_HEAD_COLOR = (85, 85, 85)
 SNAKE_BODY_COLOR = (125, 125, 125)
-FOOD_COLOR = (200, 150, 20)
-SUPER_FOOD_COLOR = (235, 0, 0)
+FOOD_COLOR = (204, 50, 204)
+SUPER_FOOD_COLOR = (220, 10, 10)
 ALPHA = 235
 ALPHA_TRANSP = 150
 
@@ -85,11 +85,11 @@ def pop_food(grid: list, snake: list):
     for body in snake:
         if [body.x, body.y] in _grid:
             _grid.pop(_grid.index([body.x, body.y]))
-    return pg.math.Vector2(random.choice(_grid)) if len(_grid) > 0 else None
+    return pg.math.Vector2(random.choice(_grid)) if len(_grid) > 0 else []
 
 
 def move_snake(snake: list, direction: pg.math.Vector2):
-    body = snake.copy()
+    body = snake[:]
     snake = [body[0].copy()]
     snake[0] += direction
     for b in body[:-1]:
@@ -134,7 +134,7 @@ def main():
     snake_move_time = MAX_MOVE_TIME
 
     food_is_present = False
-    food_position = None
+    food_position = []
     is_super_food = False
     counter_super_food = 0
     alpha_color = ALPHA
